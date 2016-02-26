@@ -56,10 +56,18 @@
     <Compile Include="Adapter\FastMapperAdapter.cs" />
     <Compile Include="Adapter\ITypeAdapter.cs" />
     <Compile Include="Adapter\ValueInjecterAdapter.cs" />
+    <Compile Include="Config\AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Config\AutoMapper\DomainToDtoMappingProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExamplesAutoMapper.Model\ExamplesAutoMapper.Model.csproj">
+      <Project>{B284F660-F54C-481C-9AA1-76C87C2D680F}</Project>
+      <Name>ExamplesAutoMapper.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

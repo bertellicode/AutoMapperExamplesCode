@@ -12,7 +12,7 @@ namespace ExamplesAutoMapper.Mapper.Adapter
 
         public TTarget Adapt<TSource, TTarget>(TSource source)
         {
-            return ObjectMapperManager.DefaultInstance.GetMapper<TSource, TTarget>.Map(source);
+            return ObjectMapperManager.DefaultInstance.GetMapper<TSource, TTarget>().Map(source); 
         }
     }
 }

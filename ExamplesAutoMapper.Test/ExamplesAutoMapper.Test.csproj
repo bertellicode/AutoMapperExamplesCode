@@ -35,7 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.4.2.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -50,8 +55,23 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="Config\Interface\IWatch.cs" />
+    <Compile Include="Config\Watch.cs" />
+    <Compile Include="Flattening.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ExamplesAutoMapper.Mapper\ExamplesAutoMapper.Mapper.csproj">
+      <Project>{50a963d2-645d-4e3c-a1cb-5d5a467f5ad6}</Project>
+      <Name>ExamplesAutoMapper.Mapper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ExamplesAutoMapper.Model\ExamplesAutoMapper.Model.csproj">
+      <Project>{b284f660-f54c-481c-9aa1-76c87c2d680f}</Project>
+      <Name>ExamplesAutoMapper.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
