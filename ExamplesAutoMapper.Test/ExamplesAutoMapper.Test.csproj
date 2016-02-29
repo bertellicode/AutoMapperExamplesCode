@@ -55,6 +55,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Config\Interface\IOrderWatch.cs" />
     <Compile Include="Config\Interface\IWatch.cs" />
     <Compile Include="Config\Watch.cs" />
     <Compile Include="Flattening.cs" />

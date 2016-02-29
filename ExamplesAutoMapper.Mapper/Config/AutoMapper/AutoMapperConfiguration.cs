@@ -10,6 +10,7 @@ namespace ExamplesAutoMapper.Mapper.Config.AutoMapper
             global::AutoMapper.Mapper.Initialize(x =>
             {
                 x.AddProfile<DomainToDtoMappingProfile>();
+                x.AddProfile<DtoToDomainMappingProfile>();
             });
         }
     }

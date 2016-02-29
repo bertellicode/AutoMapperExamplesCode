@@ -1,4 +1,6 @@
 ﻿
+using System;
+using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
 using ExamplesAutoMapper.Model;
@@ -36,7 +38,7 @@ namespace ExamplesAutoMapper.Test
 
             AutoMapperConfiguration.RegisterMappings();
 
-            OrderDto orderDto = _typeAdapter.Adapt<Order, OrderDto>(order);
+            OrderDto orderDto = AddWatch(() => _typeAdapter.Adapt<Order, OrderDto>(order));
 
             Assert.AreEqual("George Costanza", orderDto.CustomerName);
 
@@ -45,11 +47,58 @@ namespace ExamplesAutoMapper.Test
         }
 
         [TestMethod]
-        public void EmmitMapperFlatteningMethod()
+        public void FastMapperFlatteningMethod()
         {
 
+            _typeAdapter = new FastMapperAdapter();
 
+            OrderDto orderDto = AddWatch(() => _typeAdapter.Adapt<Order, OrderDto>(order));
 
+            Assert.AreEqual("George Costanza", orderDto.CustomerName);
+
+            Assert.AreEqual(74.85m, orderDto.Total);
+
+        }
+
+        [TestMethod]
+        public void EmitMapperFlatteningMethod()
+        {
+
+            _typeAdapter = new EmitMapperAdapter();
+
+            OrderDto orderDto = AddWatch(() => _typeAdapter.Adapt<Order, OrderDto>(order));
+
+            Assert.AreEqual("George Costanza", orderDto.CustomerName);
+
+            Assert.AreEqual(74.85m, orderDto.Total);
+
+        }
+
+        [TestMethod]
+        public void ValueInjecterFlatteningMethod()
+        {
+
+            _typeAdapter = new ValueInjecterAdapter();
+
+            OrderDto orderDto = AddWatch(() => _typeAdapter.Adapt<Order, OrderDto>(order));
+
+            Assert.AreEqual("George Costanza", orderDto.CustomerName);
+
+            Assert.AreEqual(74.85m, orderDto.Total);
+
+        }
+
+        public OrderDto AddWatch(Func<OrderDto> action)
+        {
+            var stopWatch = new Stopwatch();
+
+            stopWatch.Start();
+
+            var result = action();
+
+            Debug.WriteLine("{0}: Tempo de Execução {1}", _typeAdapter.Name, stopWatch.Elapsed);
+
+            return result;
         }
     }
 }

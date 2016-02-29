@@ -58,6 +58,7 @@
     <Compile Include="Adapter\ValueInjecterAdapter.cs" />
     <Compile Include="Config\AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="Config\AutoMapper\DomainToDtoMappingProfile.cs" />
+    <Compile Include="Config\AutoMapper\DtoToDomainMappingProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

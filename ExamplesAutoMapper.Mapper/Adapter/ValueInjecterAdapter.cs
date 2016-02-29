@@ -1,4 +1,5 @@
 ﻿
+using Omu.ValueInjecter;
 
 namespace ExamplesAutoMapper.Mapper.Adapter
 {
