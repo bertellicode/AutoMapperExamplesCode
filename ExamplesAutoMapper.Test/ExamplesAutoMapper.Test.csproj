@@ -55,10 +55,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ConfigurationValidation.cs" />
     <Compile Include="Config\Interface\IOrderWatch.cs" />
     <Compile Include="Config\Interface\IWatch.cs" />
     <Compile Include="Config\Watch.cs" />
+    <Compile Include="CustomTypeConverters.cs" />
     <Compile Include="Flattening.cs" />
+    <Compile Include="ListAndArrays.cs" />
+    <Compile Include="NestedMappings.cs" />
+    <Compile Include="Projection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

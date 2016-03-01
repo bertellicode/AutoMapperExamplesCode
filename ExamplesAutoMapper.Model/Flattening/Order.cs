@@ -1,9 +1,7 @@
-﻿
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace ExamplesAutoMapper.Model
+namespace ExamplesAutoMapper.Model.Flattening
 {
     public class Order
     {

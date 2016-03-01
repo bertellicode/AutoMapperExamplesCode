@@ -39,13 +39,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Customer.cs" />
+    <Compile Include="ConfigurationValidation\Source.cs" />
+    <Compile Include="CustomTypeConverters\Destination.cs" />
+    <Compile Include="CustomTypeConverters\Source.cs" />
+    <Compile Include="Dto\CalendarEventDto.cs" />
+    <Compile Include="Dto\ChildDto.cs" />
+    <Compile Include="Dto\DestinationDto.cs" />
+    <Compile Include="Dto\InnerDto.cs" />
+    <Compile Include="Dto\OuterDto.cs" />
+    <Compile Include="Dto\ParentDto.cs" />
+    <Compile Include="Flattening\Customer.cs" />
     <Compile Include="Dto\OrderDto.cs" />
-    <Compile Include="Order.cs" />
-    <Compile Include="OrderLineItem.cs" />
-    <Compile Include="Product.cs" />
+    <Compile Include="Flattening\Order.cs" />
+    <Compile Include="Flattening\OrderLineItem.cs" />
+    <Compile Include="Flattening\Product.cs" />
+    <Compile Include="ListAndArrays\ChildSource.cs" />
+    <Compile Include="ListAndArrays\ParentSource.cs" />
+    <Compile Include="ListAndArrays\Source.cs" />
+    <Compile Include="NestedMappings\InnerSource.cs" />
+    <Compile Include="NestedMappings\OuterSource.cs" />
+    <Compile Include="Projection\CalendarEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

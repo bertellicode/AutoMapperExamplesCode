@@ -1,7 +1,7 @@
 ﻿
 
 
-namespace ExamplesAutoMapper.Model
+namespace ExamplesAutoMapper.Model.Flattening
 {
     public class Customer
     {

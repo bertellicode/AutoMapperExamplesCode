@@ -57,6 +57,8 @@
     <Compile Include="Adapter\ITypeAdapter.cs" />
     <Compile Include="Adapter\ValueInjecterAdapter.cs" />
     <Compile Include="Config\AutoMapper\AutoMapperConfiguration.cs" />
+    <Compile Include="Config\AutoMapper\Converter\DateTimeTypeConverter.cs" />
+    <Compile Include="Config\AutoMapper\Converter\TypeTypeConverter.cs" />
     <Compile Include="Config\AutoMapper\DomainToDtoMappingProfile.cs" />
     <Compile Include="Config\AutoMapper\DtoToDomainMappingProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

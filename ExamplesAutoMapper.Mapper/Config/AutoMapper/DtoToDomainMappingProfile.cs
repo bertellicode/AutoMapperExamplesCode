@@ -3,6 +3,7 @@
 using AutoMapper;
 using ExamplesAutoMapper.Model;
 using ExamplesAutoMapper.Model.Dto;
+using ExamplesAutoMapper.Model.Flattening;
 
 namespace ExamplesAutoMapper.Mapper.Config.AutoMapper
 {
