@@ -2,6 +2,7 @@
 using System;
 using AutoMapper;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper.Converter;
+using ExamplesAutoMapper.Mapper.Config.AutoMapper.Resolver;
 using ExamplesAutoMapper.Model.CustomTypeConverters;
 using ExamplesAutoMapper.Model.ListAndArrays;
 using ExamplesAutoMapper.Model.Dto;
@@ -43,7 +44,28 @@ namespace ExamplesAutoMapper.Mapper.Config.AutoMapper
             global::AutoMapper.Mapper.CreateMap<string, DateTime>().ConvertUsing(new DateTimeTypeConverter());
             global::AutoMapper.Mapper.CreateMap<string, Type>().ConvertUsing<TypeTypeConverter>();
 
-            global::AutoMapper.Mapper.CreateMap<Source, Destination>();
+            global::AutoMapper.Mapper.CreateMap<Model.CustomTypeConverters.Source, Destination>();
+
+            //Custom value resolvers
+            global::AutoMapper.Mapper.CreateMap<Model.CustomValueResolvers.Source, Model.CustomValueResolvers.Destination>()
+                                        .ForMember(dest => dest.Total, opt => opt.ResolveUsing<CustomResolver>());
+
+            //Null substitution
+            global::AutoMapper.Mapper.CreateMap<Model.NullSubstitution.Source, Model.NullSubstitution.Destination>()
+                                        .ForMember(dest => dest.Value, opt => opt.NullSubstitute(10));
+
+            //Before and after map actions
+            global::AutoMapper.Mapper.CreateMap<Model.BeforeAndAfterMapActions.Source, Model.BeforeAndAfterMapActions.Destination>()
+                                        .BeforeMap((src, dest) => dest.Total = src.Value1 + src.Value2)
+                                        .AfterMap((src, dest) => dest.Name = "John");
+
+                //Maneira incorreta
+            //global::AutoMapper.Mapper.CreateMap<Model.BeforeAndAfterMapActions.Source, Model.BeforeAndAfterMapActions.Destination>()
+            //                            .ForMember(dest => dest.Total, opt => opt.MapFrom(src => src.Value1 + src.Value2))
+            //                            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
+
+
+
 
         }
     }

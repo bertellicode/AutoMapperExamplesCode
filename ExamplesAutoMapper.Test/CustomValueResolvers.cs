@@ -1,52 +1,48 @@
 ﻿
-
 using System;
 using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
-using ExamplesAutoMapper.Model.CustomTypeConverters;
-using ExamplesAutoMapper.Model.Dto;
-using ExamplesAutoMapper.Model.NestedMappings;
+using ExamplesAutoMapper.Model.CustomValueResolvers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
 {
     /// <summary>
-    /// Summary description for Custom Type Converters
+    /// Summary description for Custom Value Resolvers
     /// </summary>
     [TestClass]
-    public class CustomTypeConverters
+    public class CustomValueResolvers
     {
 
         private ITypeAdapter _typeAdapter;
 
         private Source source;
 
-        public CustomTypeConverters()
+        public CustomValueResolvers()
         {
             source = new Source
             {
-                Value1 = "5",
-                Value2 = "01/01/2000",
-                Value3 = "AutoMapperSamples.GlobalTypeConverters.GlobalTypeConverters+Destination"
+                Value1 = 5,
+                Value2 = 7
             };
         }
 
+
         [TestMethod]
-        public void AutoMapperCustomTypeConvertersMethod()
+        public void AutoMapperFlatteningMethod()
         {
 
             _typeAdapter = new AutoMapperAdapter();
 
             AutoMapperConfiguration.RegisterMappings();
 
-            Destination destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
+            Destination destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source);
 
             Assert.IsInstanceOfType(destination, typeof(Destination));
-            Assert.IsInstanceOfType(destination.Value3, typeof (Destination));
+            Assert.AreEqual(15, destination.Total);
 
         }
-
 
         public Destination AddWatch(Func<Destination> action)
         {

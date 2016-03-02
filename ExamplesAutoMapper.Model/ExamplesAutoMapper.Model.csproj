@@ -39,9 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BeforeAndAfterMapActions\Destination.cs" />
+    <Compile Include="BeforeAndAfterMapActions\Source.cs" />
+    <Compile Include="ConditionalMapping\Address.cs" />
+    <Compile Include="ConditionalMapping\Customer.cs" />
     <Compile Include="ConfigurationValidation\Source.cs" />
     <Compile Include="CustomTypeConverters\Destination.cs" />
     <Compile Include="CustomTypeConverters\Source.cs" />
+    <Compile Include="CustomValueResolvers\Destination.cs" />
+    <Compile Include="CustomValueResolvers\Source.cs" />
     <Compile Include="Dto\CalendarEventDto.cs" />
     <Compile Include="Dto\ChildDto.cs" />
     <Compile Include="Dto\DestinationDto.cs" />
@@ -58,6 +64,8 @@
     <Compile Include="ListAndArrays\Source.cs" />
     <Compile Include="NestedMappings\InnerSource.cs" />
     <Compile Include="NestedMappings\OuterSource.cs" />
+    <Compile Include="NullSubstitution\Destination.cs" />
+    <Compile Include="NullSubstitution\Source.cs" />
     <Compile Include="Projection\CalendarEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
