@@ -1,11 +1,12 @@
 ﻿
 
+
 namespace ExamplesAutoMapper.Model.ConditionalMapping
 {
-    public class Customer
+    public class Source
     {
 
-
+        public int Value { get; set; }
 
     }
 }

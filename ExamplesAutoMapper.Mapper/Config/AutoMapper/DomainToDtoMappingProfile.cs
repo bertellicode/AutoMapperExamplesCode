@@ -1,14 +1,17 @@
 ﻿
 using System;
+using System.Linq;
 using AutoMapper;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper.Converter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper.Resolver;
+using ExamplesAutoMapper.Model.ConditionalMapping;
 using ExamplesAutoMapper.Model.CustomTypeConverters;
 using ExamplesAutoMapper.Model.ListAndArrays;
 using ExamplesAutoMapper.Model.Dto;
 using ExamplesAutoMapper.Model.Flattening;
 using ExamplesAutoMapper.Model.NestedMappings;
 using ExamplesAutoMapper.Model.Projection;
+using Customer = ExamplesAutoMapper.Model.ConditionalMapping.Customer;
 using Source = ExamplesAutoMapper.Model.ListAndArrays.Source;
 
 namespace ExamplesAutoMapper.Mapper.Config.AutoMapper
@@ -44,7 +47,7 @@ namespace ExamplesAutoMapper.Mapper.Config.AutoMapper
             global::AutoMapper.Mapper.CreateMap<string, DateTime>().ConvertUsing(new DateTimeTypeConverter());
             global::AutoMapper.Mapper.CreateMap<string, Type>().ConvertUsing<TypeTypeConverter>();
 
-            global::AutoMapper.Mapper.CreateMap<Model.CustomTypeConverters.Source, Destination>();
+            global::AutoMapper.Mapper.CreateMap<Model.CustomTypeConverters.Source, Model.CustomTypeConverters.Destination>();
 
             //Custom value resolvers
             global::AutoMapper.Mapper.CreateMap<Model.CustomValueResolvers.Source, Model.CustomValueResolvers.Destination>()
@@ -64,8 +67,12 @@ namespace ExamplesAutoMapper.Mapper.Config.AutoMapper
             //                            .ForMember(dest => dest.Total, opt => opt.MapFrom(src => src.Value1 + src.Value2))
             //                            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
 
+            //Conditional mapping
+            global::AutoMapper.Mapper.CreateMap<Model.ConditionalMapping.Source, Model.ConditionalMapping.Destination>()
+                                        .ForMember(dest => dest.value, opt => opt.Condition(src => (src.value >= 0)));
 
-
+            //global::AutoMapper.Mapper.CreateMap<Model.ConditionalMapping.Source, Model.ConditionalMapping.Destination>()
+            //                            .ForMember(dest => dest.value, opt => opt.MapFrom(src => src.value >= 0 ? src.value : 0)); 
 
         }
     }

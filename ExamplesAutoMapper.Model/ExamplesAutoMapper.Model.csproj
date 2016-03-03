@@ -41,8 +41,8 @@
   <ItemGroup>
     <Compile Include="BeforeAndAfterMapActions\Destination.cs" />
     <Compile Include="BeforeAndAfterMapActions\Source.cs" />
-    <Compile Include="ConditionalMapping\Address.cs" />
-    <Compile Include="ConditionalMapping\Customer.cs" />
+    <Compile Include="ConditionalMapping\Destination.cs" />
+    <Compile Include="ConditionalMapping\Source.cs" />
     <Compile Include="ConfigurationValidation\Source.cs" />
     <Compile Include="CustomTypeConverters\Destination.cs" />
     <Compile Include="CustomTypeConverters\Source.cs" />
