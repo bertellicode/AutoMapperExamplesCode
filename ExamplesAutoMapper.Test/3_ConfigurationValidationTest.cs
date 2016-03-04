@@ -1,13 +1,9 @@
 ﻿
 
-using System;
-using System.Diagnostics;
 using AutoMapper;
-using ExamplesAutoMapper.Mapper.Adapter;
-using ExamplesAutoMapper.Model.ConfigurationValidation;
-using ExamplesAutoMapper.Model.Dto;
-using ExamplesAutoMapper.Model.Projection;
+using ExamplesAutoMapper.Model.ListAndArrays;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Source = ExamplesAutoMapper.Model.ConfigurationValidation.Source;
 
 namespace ExamplesAutoMapper.Test
 {
@@ -15,7 +11,7 @@ namespace ExamplesAutoMapper.Test
     /// Summary description for Configuration Validation
     /// </summary>
     [TestClass]
-    public class ConfigurationValidation
+    public class ConfigurationValidationTest
     {
 
         [TestMethod]

@@ -3,7 +3,6 @@ using System;
 using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
-using ExamplesAutoMapper.Model.Dto;
 using ExamplesAutoMapper.Model.Flattening;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -13,7 +12,7 @@ namespace ExamplesAutoMapper.Test
     /// Summary description for Flattening
     /// </summary>
     [TestClass]
-    public class Flattening
+    public class FlatteningTest
     {
 
         private ITypeAdapter _typeAdapter;
@@ -22,7 +21,7 @@ namespace ExamplesAutoMapper.Test
         private Order order;
         private Product bosco;
 
-        public Flattening()
+        public FlatteningTest()
         {
             customer = new Customer { Name = "George Costanza" };
             order = new Order { Customer = customer };

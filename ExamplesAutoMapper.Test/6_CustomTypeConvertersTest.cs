@@ -13,20 +13,20 @@ namespace ExamplesAutoMapper.Test
     /// Summary description for Custom Type Converters
     /// </summary>
     [TestClass]
-    public class CustomTypeConverters
+    public class CustomTypeConvertersTest
     {
 
         private ITypeAdapter _typeAdapter;
 
         private Source source;
 
-        public CustomTypeConverters()
+        public CustomTypeConvertersTest()
         {
             source = new Source
             {
                 Value1 = "5",
                 Value2 = "01/01/2000",
-                Value3 = "AutoMapperSamples.GlobalTypeConverters.GlobalTypeConverters+Destination"
+                Value3 = "ExamplesAutoMapper.Model.CustomTypeConverters+Destination"
             };
         }
 
@@ -41,7 +41,7 @@ namespace ExamplesAutoMapper.Test
             Destination destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
 
             Assert.IsInstanceOfType(destination, typeof(Destination));
-            Assert.IsInstanceOfType(destination.Value3, typeof (Destination));
+            Assert.IsInstanceOfType(destination.Value3, typeof(Destination));
 
         }
 

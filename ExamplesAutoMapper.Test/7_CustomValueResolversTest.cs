@@ -1,33 +1,30 @@
 ﻿
-
 using System;
 using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
-using ExamplesAutoMapper.Model.Dto;
-using ExamplesAutoMapper.Model.Flattening;
-using ExamplesAutoMapper.Model.NestedMappings;
+using ExamplesAutoMapper.Model.CustomValueResolvers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
 {
     /// <summary>
-    /// Summary description for Nested Mappings
+    /// Summary description for Custom Value Resolvers
     /// </summary>
     [TestClass]
-    public class NestedMappings
+    public class CustomValueResolversTest
     {
 
         private ITypeAdapter _typeAdapter;
 
-        private OuterSource outerSource;
+        private Source source;
 
-        public NestedMappings()
+        public CustomValueResolversTest()
         {
-            outerSource = new OuterSource
+            source = new Source
             {
-                Value = 5,
-                Inner = new InnerSource { OtherValue = 15 }
+                Value1 = 5,
+                Value2 = 7
             };
         }
 
@@ -40,16 +37,14 @@ namespace ExamplesAutoMapper.Test
 
             AutoMapperConfiguration.RegisterMappings();
 
-            OuterDto outerDto = AddWatch(() => _typeAdapter.Adapt<OuterSource, OuterDto>(outerSource));
+            Destination destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
 
-            Assert.AreEqual(5,outerDto.Value);
-            Assert.IsNotNull(outerDto.Inner);
-            Assert.AreEqual(15, outerDto.Inner.OtherValue);
-            Assert.IsInstanceOfType(outerDto, typeof (OuterDto));
+            Assert.IsInstanceOfType(destination, typeof(Destination));
+            Assert.AreEqual(12, destination.Total);
 
         }
 
-        public OuterDto AddWatch(Func<OuterDto> action)
+        public Destination AddWatch(Func<Destination> action)
         {
             var stopWatch = new Stopwatch();
 

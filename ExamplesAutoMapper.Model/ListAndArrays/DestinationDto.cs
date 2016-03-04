@@ -1,6 +1,6 @@
 ﻿
 
-namespace ExamplesAutoMapper.Model.Dto
+namespace ExamplesAutoMapper.Model.ListAndArrays
 {
     public class DestinationDto
     {

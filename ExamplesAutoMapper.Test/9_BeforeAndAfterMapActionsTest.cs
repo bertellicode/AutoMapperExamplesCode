@@ -4,50 +4,44 @@ using System;
 using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
-using ExamplesAutoMapper.Model.ConditionalMapping;
+using ExamplesAutoMapper.Model.BeforeAndAfterMapActions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
 {
     /// <summary>
-    /// Summary description for Conditional Mapping
+    /// Summary description for Before And After Map Actions
     /// </summary>
     [TestClass]
-    public class ConditionalMapping
+    public class BeforeAndAfterMapActionsTest
     {
 
         private ITypeAdapter _typeAdapter;
 
         private Source source;
 
-        public ConditionalMapping()
+        public BeforeAndAfterMapActionsTest()
         {
             source = new Source
             {
-                Value = 5
+                Name = "Kid",
+                Value1 = 5,
+                Value2 = 5
             };
         }
 
         [TestMethod]
-        public void AutoMapperCustomTypeConvertersMethod()
+        public void AutoMapperBeforeAndAfterMapActionsMethod()
         {
-            Destination destination;
 
             _typeAdapter = new AutoMapperAdapter();
 
             AutoMapperConfiguration.RegisterMappings();
 
-            destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
+            Destination destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
 
             Assert.IsInstanceOfType(destination, typeof(Destination));
-            Assert.AreEqual(0, destination.Value);
-
-            source.Value = 0;
-
-            destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
-
-            Assert.IsInstanceOfType(destination, typeof(Destination));
-            Assert.AreEqual(0, destination.Value);
+            Assert.AreEqual(10, destination.Total);
 
         }
 

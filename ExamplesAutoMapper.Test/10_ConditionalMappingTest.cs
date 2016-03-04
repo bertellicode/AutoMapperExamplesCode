@@ -4,49 +4,53 @@ using System;
 using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
-using ExamplesAutoMapper.Model.NullSubstitution;
+using ExamplesAutoMapper.Model.ConditionalMapping;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
 {
     /// <summary>
-    /// Summary description for Custom Value Resolvers
+    /// Summary description for Conditional Mapping
     /// </summary>
     [TestClass]
-    public class NullSubstitution
+    public class ConditionalMappingTest
     {
+
         private ITypeAdapter _typeAdapter;
 
         private Source source;
 
-        public NullSubstitution()
+        public ConditionalMappingTest()
         {
-            source = new Source { Value = null };
+            source = new Source
+            {
+                Value = 5
+            };
         }
 
         [TestMethod]
-        public void AutoMapperNullSubstitutionMethod()
+        public void AutoMapperCustomTypeConvertersMethod()
         {
+            Destination destination;
 
             _typeAdapter = new AutoMapperAdapter();
 
             AutoMapperConfiguration.RegisterMappings();
 
-            Destination destination;
+            destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
+
+            Assert.IsInstanceOfType(destination, typeof(Destination));
+            Assert.AreEqual(0, destination.Value);
+
+            source.Value = 0;
 
             destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
 
-            Assert.IsNotNull(destination.Value);
-            Assert.AreEqual(10, destination.Value);
-
-            source.Value = 5;
-
-            destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
-
-            Assert.IsNotNull(destination.Value);
-            Assert.AreEqual(10, destination.Value);
+            Assert.IsInstanceOfType(destination, typeof(Destination));
+            Assert.AreEqual(0, destination.Value);
 
         }
+
 
         public Destination AddWatch(Func<Destination> action)
         {

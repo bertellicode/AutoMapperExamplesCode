@@ -15,7 +15,7 @@ namespace ExamplesAutoMapper.Test
     /// Summary description for ListAndArrays
     /// </summary>
     [TestClass]
-    public class ListAndArrays
+    public class ListAndArraysTest
     {
 
         private ITypeAdapter _typeAdapter;
@@ -23,7 +23,7 @@ namespace ExamplesAutoMapper.Test
         private Source[] sources;
         private ParentSource[] sourcesPolymorphic;
 
-        public ListAndArrays()
+        public ListAndArraysTest()
         {
             sources = new[]
             {

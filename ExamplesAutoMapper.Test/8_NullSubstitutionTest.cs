@@ -4,47 +4,49 @@ using System;
 using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
-using ExamplesAutoMapper.Model.BeforeAndAfterMapActions;
+using ExamplesAutoMapper.Model.NullSubstitution;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
 {
     /// <summary>
-    /// Summary description for Before And After Map Actions
+    /// Summary description for Custom Value Resolvers
     /// </summary>
     [TestClass]
-    public class BeforeAndAfterMapActions
+    public class NullSubstitutionTest
     {
-
         private ITypeAdapter _typeAdapter;
 
         private Source source;
 
-        public BeforeAndAfterMapActions()
+        public NullSubstitutionTest()
         {
-            source = new Source
-            {
-                Name = "Kid",
-                Value1 = 5,
-                Value2 = 5
-            };
+            source = new Source { Value = null };
         }
 
         [TestMethod]
-        public void AutoMapperBeforeAndAfterMapActionsMethod()
+        public void AutoMapperNullSubstitutionMethod()
         {
 
             _typeAdapter = new AutoMapperAdapter();
 
             AutoMapperConfiguration.RegisterMappings();
 
-            Destination destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source);
+            Destination destination;
 
-            Assert.IsInstanceOfType(destination, typeof(Destination));
-            Assert.AreEqual(10, destination.Total);
+            destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
+
+            Assert.IsNotNull(destination.Value);
+            Assert.AreEqual(10, destination.Value);
+
+            source.Value = 5;
+
+            destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
+
+            Assert.IsNotNull(destination.Value);
+            Assert.AreEqual(10, destination.Value);
 
         }
-
 
         public Destination AddWatch(Func<Destination> action)
         {

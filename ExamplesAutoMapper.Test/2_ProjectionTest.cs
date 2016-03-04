@@ -14,13 +14,13 @@ namespace ExamplesAutoMapper.Test
     /// Summary description for Projection
     /// </summary>
     [TestClass]
-    public class Projection
+    public class ProjectionTest
     {
         private ITypeAdapter _typeAdapter;
 
         private CalendarEvent calendarEvent;
 
-        public Projection()
+        public ProjectionTest()
         {
             calendarEvent = new CalendarEvent
             {

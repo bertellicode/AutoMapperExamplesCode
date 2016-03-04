@@ -2,7 +2,7 @@
 
 using System;
 
-namespace ExamplesAutoMapper.Model.Dto
+namespace ExamplesAutoMapper.Model.Projection
 {
     public class CalendarEventDto
     {

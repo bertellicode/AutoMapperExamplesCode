@@ -55,19 +55,16 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="BeforeAndAfterMapActions.cs" />
-    <Compile Include="ConditionalMapping.cs" />
-    <Compile Include="ConfigurationValidation.cs" />
-    <Compile Include="Config\Interface\IOrderWatch.cs" />
-    <Compile Include="Config\Interface\IWatch.cs" />
-    <Compile Include="Config\Watch.cs" />
-    <Compile Include="CustomTypeConverters.cs" />
-    <Compile Include="CustomValueResolvers.cs" />
-    <Compile Include="Flattening.cs" />
-    <Compile Include="ListAndArrays.cs" />
-    <Compile Include="NestedMappings.cs" />
-    <Compile Include="NullSubstitution.cs" />
-    <Compile Include="Projection.cs" />
+    <Compile Include="9_BeforeAndAfterMapActionsTest.cs" />
+    <Compile Include="10_ConditionalMappingTest.cs" />
+    <Compile Include="3_ConfigurationValidationTest.cs" />
+    <Compile Include="6_CustomTypeConvertersTest.cs" />
+    <Compile Include="7_CustomValueResolversTest.cs" />
+    <Compile Include="1_FlatteningTest.cs" />
+    <Compile Include="4_ListAndArraysTest.cs" />
+    <Compile Include="5_NestedMappingsTest.cs" />
+    <Compile Include="8_NullSubstitutionTest.cs" />
+    <Compile Include="2_ProjectionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
