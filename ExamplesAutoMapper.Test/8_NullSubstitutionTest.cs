@@ -5,6 +5,7 @@ using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
 using ExamplesAutoMapper.Model.NullSubstitution;
+using ExamplesAutoMapper.Test.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
@@ -16,12 +17,14 @@ namespace ExamplesAutoMapper.Test
     public class NullSubstitutionTest
     {
         private ITypeAdapter _typeAdapter;
+        private IWatch<Destination> _watch;
 
         private Source source;
 
         public NullSubstitutionTest()
         {
             source = new Source { Value = null };
+            _watch = new Watch<Destination>();
         }
 
         [TestMethod]
@@ -34,31 +37,24 @@ namespace ExamplesAutoMapper.Test
 
             Destination destination;
 
-            destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
+            destination = _watch.AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source), _typeAdapter);
 
-            Assert.IsNotNull(destination.Value);
-            Assert.AreEqual(10, destination.Value);
+            Asserts(destination);
 
             source.Value = 5;
 
-            destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
+            destination = _watch.AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source), _typeAdapter);
+
+            Asserts(destination);
+
+        }
+
+        public void Asserts(Destination destination)
+        {
 
             Assert.IsNotNull(destination.Value);
             Assert.AreEqual(10, destination.Value);
 
-        }
-
-        public Destination AddWatch(Func<Destination> action)
-        {
-            var stopWatch = new Stopwatch();
-
-            stopWatch.Start();
-
-            var result = action();
-
-            Debug.WriteLine("{0}: Tempo de Execução {1}", _typeAdapter.Name, stopWatch.Elapsed);
-
-            return result;
         }
 
     }

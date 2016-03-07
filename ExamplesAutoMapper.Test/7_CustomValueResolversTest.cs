@@ -4,6 +4,7 @@ using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
 using ExamplesAutoMapper.Model.CustomValueResolvers;
+using ExamplesAutoMapper.Test.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
@@ -16,6 +17,7 @@ namespace ExamplesAutoMapper.Test
     {
 
         private ITypeAdapter _typeAdapter;
+        private IWatch<Destination> _watch;
 
         private Source source;
 
@@ -26,6 +28,8 @@ namespace ExamplesAutoMapper.Test
                 Value1 = 5,
                 Value2 = 7
             };
+
+            _watch = new Watch<Destination>();
         }
 
 
@@ -37,24 +41,18 @@ namespace ExamplesAutoMapper.Test
 
             AutoMapperConfiguration.RegisterMappings();
 
-            Destination destination = AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source));
+            Destination destination = _watch.AddWatch(() => _typeAdapter.Adapt<Source, Destination>(source), _typeAdapter);
+
+            Asserts(destination);
+
+        }
+
+        public void Asserts(Destination destination)
+        {
 
             Assert.IsInstanceOfType(destination, typeof(Destination));
             Assert.AreEqual(12, destination.Total);
 
-        }
-
-        public Destination AddWatch(Func<Destination> action)
-        {
-            var stopWatch = new Stopwatch();
-
-            stopWatch.Start();
-
-            var result = action();
-
-            Debug.WriteLine("{0}: Tempo de Execução {1}", _typeAdapter.Name, stopWatch.Elapsed);
-
-            return result;
         }
 
     }

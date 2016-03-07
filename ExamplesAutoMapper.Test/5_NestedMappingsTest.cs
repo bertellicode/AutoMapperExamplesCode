@@ -1,11 +1,10 @@
 ﻿
 
-using System;
-using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
 using ExamplesAutoMapper.Model.Dto;
 using ExamplesAutoMapper.Model.NestedMappings;
+using ExamplesAutoMapper.Test.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
@@ -18,6 +17,7 @@ namespace ExamplesAutoMapper.Test
     {
 
         private ITypeAdapter _typeAdapter;
+        private IWatch<OuterDto> _watch;
 
         private OuterSource outerSource;
 
@@ -28,6 +28,8 @@ namespace ExamplesAutoMapper.Test
                 Value = 5,
                 Inner = new InnerSource { OtherValue = 15 }
             };
+
+            _watch = new Watch<OuterDto>();
         }
 
 
@@ -39,26 +41,20 @@ namespace ExamplesAutoMapper.Test
 
             AutoMapperConfiguration.RegisterMappings();
 
-            OuterDto outerDto = AddWatch(() => _typeAdapter.Adapt<OuterSource, OuterDto>(outerSource));
+            OuterDto outerDto = _watch.AddWatch(() => _typeAdapter.Adapt<OuterSource, OuterDto>(outerSource), _typeAdapter);
 
-            Assert.AreEqual(5,outerDto.Value);
-            Assert.IsNotNull(outerDto.Inner);
-            Assert.AreEqual(15, outerDto.Inner.OtherValue);
-            Assert.IsInstanceOfType(outerDto, typeof (OuterDto));
+            Asserts(outerDto);
 
         }
 
-        public OuterDto AddWatch(Func<OuterDto> action)
+        public void Asserts(OuterDto outerDto)
         {
-            var stopWatch = new Stopwatch();
 
-            stopWatch.Start();
+            Assert.AreEqual(5, outerDto.Value);
+            Assert.IsNotNull(outerDto.Inner);
+            Assert.AreEqual(15, outerDto.Inner.OtherValue);
+            Assert.IsInstanceOfType(outerDto, typeof(OuterDto));
 
-            var result = action();
-
-            Debug.WriteLine("{0}: Tempo de Execução {1}", _typeAdapter.Name, stopWatch.Elapsed);
-
-            return result;
         }
 
     }

@@ -62,6 +62,7 @@
     <Compile Include="Config\AutoMapper\DomainToDtoMappingProfile.cs" />
     <Compile Include="Config\AutoMapper\Resolver\CustomResolver.cs" />
     <Compile Include="Config\AutoMapper\Resolver\IValueResolver.cs" />
+    <Compile Include="Config\EmitMapper\EmitMapperConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,8 +4,8 @@ using System;
 using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
-using ExamplesAutoMapper.Model.Dto;
 using ExamplesAutoMapper.Model.Projection;
+using ExamplesAutoMapper.Test.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
@@ -17,6 +17,7 @@ namespace ExamplesAutoMapper.Test
     public class ProjectionTest
     {
         private ITypeAdapter _typeAdapter;
+        private IWatch<CalendarEventDto> _watch;
 
         private CalendarEvent calendarEvent;
 
@@ -27,6 +28,8 @@ namespace ExamplesAutoMapper.Test
                 Date = new DateTime(2008, 12, 15, 20, 30, 0),
                 Title = "Company Holiday Party"
             };
+
+            _watch = new Watch<CalendarEventDto>();
         }
 
         [TestMethod]
@@ -37,12 +40,9 @@ namespace ExamplesAutoMapper.Test
 
             AutoMapperConfiguration.RegisterMappings();
 
-            CalendarEventDto calendarEventDto = AddWatch(() => _typeAdapter.Adapt<CalendarEvent, CalendarEventDto>(calendarEvent));
+            CalendarEventDto calendarEventDto = _watch.AddWatch(() => _typeAdapter.Adapt<CalendarEvent, CalendarEventDto>(calendarEvent), _typeAdapter);
 
-            Assert.AreEqual(new DateTime(2008, 12, 15), calendarEventDto.EventDate);
-            Assert.AreEqual((20), calendarEventDto.EventHour);
-            Assert.AreEqual((30), calendarEventDto.EventMinute);
-            Assert.AreEqual("Company Holiday Party", calendarEventDto.Title);
+            Asserts(calendarEventDto);
 
         }
 
@@ -52,26 +52,20 @@ namespace ExamplesAutoMapper.Test
 
             _typeAdapter = new FastMapperAdapter();
 
-            CalendarEventDto calendarEventDto = AddWatch(() => _typeAdapter.Adapt<CalendarEvent, CalendarEventDto>(calendarEvent));
+            CalendarEventDto calendarEventDto = _watch.AddWatch(() => _typeAdapter.Adapt<CalendarEvent, CalendarEventDto>(calendarEvent), _typeAdapter);
+
+            Asserts(calendarEventDto);
+
+        }
+
+        public void Asserts(CalendarEventDto calendarEventDto)
+        {
 
             Assert.AreEqual(new DateTime(2008, 12, 15), calendarEventDto.EventDate);
             Assert.AreEqual((20), calendarEventDto.EventHour);
             Assert.AreEqual((30), calendarEventDto.EventMinute);
             Assert.AreEqual("Company Holiday Party", calendarEventDto.Title);
 
-        }
-
-        public CalendarEventDto AddWatch(Func<CalendarEventDto> action)
-        {
-            var stopWatch = new Stopwatch();
-
-            stopWatch.Start();
-
-            var result = action();
-
-            Debug.WriteLine("{0}: Tempo de Execução {1}", _typeAdapter.Name, stopWatch.Elapsed);
-
-            return result;
         }
 
     }

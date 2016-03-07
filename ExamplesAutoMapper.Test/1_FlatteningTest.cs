@@ -1,9 +1,8 @@
 ﻿
-using System;
-using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
 using ExamplesAutoMapper.Model.Flattening;
+using ExamplesAutoMapper.Test.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
@@ -16,6 +15,7 @@ namespace ExamplesAutoMapper.Test
     {
 
         private ITypeAdapter _typeAdapter;
+        private IWatch<OrderDto> _watch;
 
         private Customer customer;
         private Order order;
@@ -27,6 +27,7 @@ namespace ExamplesAutoMapper.Test
             order = new Order { Customer = customer };
             bosco = new Product { Name = "Bosco", Price = 4.99m };
             order.AddOrderLineItem(bosco, 15);
+            _watch = new Watch<OrderDto>();
         }
 
         [TestMethod]
@@ -37,11 +38,9 @@ namespace ExamplesAutoMapper.Test
 
             AutoMapperConfiguration.RegisterMappings();
 
-            OrderDto orderDto = AddWatch(() => _typeAdapter.Adapt<Order, OrderDto>(order));
+            OrderDto orderDto = _watch.AddWatch(() => _typeAdapter.Adapt<Order, OrderDto>(order), _typeAdapter);
 
-            Assert.AreEqual("George Costanza", orderDto.CustomerName);
-
-            Assert.AreEqual(74.85m, orderDto.Total); 
+            Asserts(orderDto);
 
         }
 
@@ -51,53 +50,19 @@ namespace ExamplesAutoMapper.Test
 
             _typeAdapter = new FastMapperAdapter();
 
-            OrderDto orderDto = AddWatch(() => _typeAdapter.Adapt<Order, OrderDto>(order));
+            OrderDto orderDto = _watch.AddWatch(() => _typeAdapter.Adapt<Order, OrderDto>(order), _typeAdapter);
+
+            Asserts(orderDto);
+
+        }
+
+        public void Asserts(OrderDto orderDto)
+        {
 
             Assert.AreEqual("George Costanza", orderDto.CustomerName);
-
             Assert.AreEqual(74.85m, orderDto.Total);
 
         }
 
-        //[TestMethod]
-        //public void EmitMapperFlatteningMethod()
-        //{
-
-        //    _typeAdapter = new EmitMapperAdapter();
-
-        //    OrderDto orderDto = AddWatch(() => _typeAdapter.Adapt<Order, OrderDto>(order));
-
-        //    Assert.AreEqual("George Costanza", orderDto.CustomerName);
-
-        //    Assert.AreEqual(74.85m, orderDto.Total);
-
-        //}
-
-        //[TestMethod]
-        //public void ValueInjecterFlatteningMethod()
-        //{
-
-        //    _typeAdapter = new ValueInjecterAdapter();
-
-        //    OrderDto orderDto = AddWatch(() => _typeAdapter.Adapt<Order, OrderDto>(order));
-
-        //    Assert.AreEqual("George Costanza", orderDto.CustomerName);
-
-        //    Assert.AreEqual(74.85m, orderDto.Total);
-
-        //}
-
-        public OrderDto AddWatch(Func<OrderDto> action)
-        {
-            var stopWatch = new Stopwatch();
-
-            stopWatch.Start();
-
-            var result = action();
-
-            Debug.WriteLine("{0}: Tempo de Execução {1}", _typeAdapter.Name, stopWatch.Elapsed);
-
-            return result;
-        }
     }
 }

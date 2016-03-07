@@ -1,12 +1,10 @@
 ﻿
 
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using ExamplesAutoMapper.Mapper.Adapter;
 using ExamplesAutoMapper.Mapper.Config.AutoMapper;
-using ExamplesAutoMapper.Model.Dto;
 using ExamplesAutoMapper.Model.ListAndArrays;
+using ExamplesAutoMapper.Test.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace ExamplesAutoMapper.Test
@@ -19,6 +17,8 @@ namespace ExamplesAutoMapper.Test
     {
 
         private ITypeAdapter _typeAdapter;
+        private IWatch<IList<DestinationDto>> _watch;
+        private IWatch<IList<ParentDto>> _watchPolymorphic;
 
         private Source[] sources;
         private ParentSource[] sourcesPolymorphic;
@@ -38,6 +38,11 @@ namespace ExamplesAutoMapper.Test
                 new ChildSource(),
                 new ParentSource()
             };
+
+            _watch = new Watch<IList<DestinationDto>>();
+
+            _watchPolymorphic = new Watch<IList<ParentDto>>();
+
         }
 
 
@@ -49,11 +54,11 @@ namespace ExamplesAutoMapper.Test
 
             AutoMapperConfiguration.RegisterMappings();
 
-            IEnumerable<DestinationDto> ienumerableDest = AddWatch(() => (IList<DestinationDto>) _typeAdapter.Adapt<Source[], IEnumerable<DestinationDto>>(sources));
-            ICollection<DestinationDto> icollectionDest = AddWatch(() => (IList<DestinationDto>) _typeAdapter.Adapt<Source[], ICollection<DestinationDto>>(sources));
-            IList<DestinationDto> ilistDest = AddWatch(() => _typeAdapter.Adapt<Source[], IList<DestinationDto>>(sources));
-            List<DestinationDto> listDest = (List<DestinationDto>) AddWatch(() => _typeAdapter.Adapt<Source[], List<DestinationDto>>(sources));
-            DestinationDto[] arrayDest = (DestinationDto[]) AddWatch(() => _typeAdapter.Adapt<Source[], DestinationDto[]>(sources));
+            IEnumerable<DestinationDto> ienumerableDest = _watch.AddWatch(() => (IList<DestinationDto>)_typeAdapter.Adapt<Source[], IEnumerable<DestinationDto>>(sources), _typeAdapter);
+            ICollection<DestinationDto> icollectionDest = _watch.AddWatch(() => (IList<DestinationDto>)_typeAdapter.Adapt<Source[], ICollection<DestinationDto>>(sources), _typeAdapter);
+            IList<DestinationDto> ilistDest = _watch.AddWatch(() => _typeAdapter.Adapt<Source[], IList<DestinationDto>>(sources), _typeAdapter);
+            List<DestinationDto> listDest = (List<DestinationDto>)_watch.AddWatch(() => _typeAdapter.Adapt<Source[], List<DestinationDto>>(sources), _typeAdapter);
+            DestinationDto[] arrayDest = (DestinationDto[])_watch.AddWatch(() => _typeAdapter.Adapt<Source[], DestinationDto[]>(sources), _typeAdapter);
 
         }
 
@@ -65,39 +70,17 @@ namespace ExamplesAutoMapper.Test
 
             AutoMapperConfiguration.RegisterMappings();
 
-            ParentDto[] destinations = (ParentDto[]) AddWatchPolymorphic(() => _typeAdapter.Adapt<ParentSource[], ParentDto[]>(sourcesPolymorphic));
+            ParentDto[] destinations = (ParentDto[])_watchPolymorphic.AddWatch(() => _typeAdapter.Adapt<ParentSource[], ParentDto[]>(sourcesPolymorphic), _typeAdapter);
 
+            AssertsPolymorphic(destinations);
+
+        }
+
+        public void AssertsPolymorphic(ParentDto[] destinations)
+        {
             Assert.IsInstanceOfType(destinations[0], typeof(ParentDto));
             Assert.IsInstanceOfType(destinations[1], typeof(ChildDto));
             Assert.IsInstanceOfType(destinations[2], typeof(ParentDto));
-
-        }
-
-
-        public IList<DestinationDto> AddWatch(Func<IList<DestinationDto>> action)
-        {
-            var stopWatch = new Stopwatch();
-
-            stopWatch.Start();
-
-            var result = action();
-
-            Debug.WriteLine("{0}: Tempo de Execução {1}", _typeAdapter.Name, stopWatch.Elapsed);
-
-            return result;
-        }
-
-        public IList<ParentDto> AddWatchPolymorphic(Func<IList<ParentDto>> action)
-        {
-            var stopWatch = new Stopwatch();
-
-            stopWatch.Start();
-
-            var result = action();
-
-            Debug.WriteLine("{0}: Tempo de Execução {1}", _typeAdapter.Name, stopWatch.Elapsed);
-
-            return result;
         }
 
     }
